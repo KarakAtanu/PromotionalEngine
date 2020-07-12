@@ -1,5 +1,6 @@
 ﻿using PromotionalEngine.Common.DomainModels;
 using PromotionalEngine.DataAccess.Interface;
+using System;
 using System.Linq;
 
 namespace PromotionalEngine.Business
@@ -17,6 +18,8 @@ namespace PromotionalEngine.Business
 
         public double GetCheckoutPrice(Cart cart)
         {
+            if (cart == null)
+                throw new ArgumentNullException("Invalid Cart");
             if (cart.CartItems.Count == 1)
             {
                 return _productDataAccessService.GetProducts().Single(x => x.Id.Equals(cart.CartItems[0].ItemId)).UnitPrice;
