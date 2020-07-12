@@ -3,6 +3,7 @@ using Moq;
 using PromotionalEngine.Common.DomainModels;
 using PromotionalEngine.DataAccess;
 using PromotionalEngine.DataAccess.DataStore;
+using System;
 using System.Collections.Generic;
 
 namespace PromotionalEngine.Tests.DataAccess
@@ -24,7 +25,6 @@ namespace PromotionalEngine.Tests.DataAccess
             _mockDataStore.SetupGet(x => x.Products).Returns(new List<ProductItem>());
             //Act
             IList<ProductItem> result = _prodDataAccessService.GetProducts();
-
             //Assert
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Count == 0);
@@ -38,13 +38,21 @@ namespace PromotionalEngine.Tests.DataAccess
               Id="x", UnitPrice=10
              }
             });
-
             //Act
             var result = _prodDataAccessService.GetProducts();
-
             //Assert
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Count > 0);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(NullReferenceException))]
+        public void GetProducts_ProductStoreDoesNotExist_ShouldThrowNullReferenceException()
+        {
+            //Arrange            
+            //Act
+            _prodDataAccessService.GetProducts();
+            //Assert
+
         }
     }
 }
