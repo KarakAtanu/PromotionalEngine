@@ -15,7 +15,10 @@ namespace PromotionalEngine.DataAccess
 
         public PromotionRules GetPromotionRules()
         {
-            return _dataStore.PromotionRules;
+            var promoRules = _dataStore.PromotionRules;
+            if (promoRules == null)
+                throw new NullReferenceException("Promotion Rules store does not exists");
+            return promoRules;
         }
     }
 }
