@@ -10,15 +10,20 @@ namespace PromotionalEngine.Tests.DataAccess
     [TestClass]
     public class ProductDataAccessServiceTests
     {
+        private Mock<IStore> _mockDataStore;
+        private readonly ProductDataAccessService _prodDataAccessService;
+        public ProductDataAccessServiceTests()
+        {
+            _mockDataStore = new Mock<IStore>();
+            _prodDataAccessService = new ProductDataAccessService(_mockDataStore.Object);
+        }
         [TestMethod]
         public void GetProducts_WhenNoProductInTheStore_ShouldReturnEmptyList()
         {
-            //Arrange   
-            var mockDataStore = new Mock<IStore>();
-            var prodDataAccessService = new ProductDataAccessService(mockDataStore.Object);
-            mockDataStore.SetupGet(x => x.Products).Returns(new List<ProductItem>());
+            //Arrange            
+            _mockDataStore.SetupGet(x => x.Products).Returns(new List<ProductItem>());
             //Act
-            IList<ProductItem> result = prodDataAccessService.GetProducts();
+            IList<ProductItem> result = _prodDataAccessService.GetProducts();
 
             //Assert
             Assert.IsNotNull(result);
@@ -27,17 +32,15 @@ namespace PromotionalEngine.Tests.DataAccess
         [TestMethod]
         public void GetProducts_ProductsInTheStore_ShouldNotReturnEmptyList()
         {
-            //Arrange
-            var mockDataStore = new Mock<IStore>();
-            var prodDataAccessService = new ProductDataAccessService(mockDataStore.Object);
-            mockDataStore.SetupGet(x => x.Products).Returns(new List<ProductItem> {
+            //Arrange            
+            _mockDataStore.SetupGet(x => x.Products).Returns(new List<ProductItem> {
              new ProductItem{
               Id="x", UnitPrice=10
              }
             });
 
             //Act
-            var result = prodDataAccessService.GetProducts();
+            var result = _prodDataAccessService.GetProducts();
 
             //Assert
             Assert.IsNotNull(result);
