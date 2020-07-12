@@ -9,4 +9,9 @@
     <ProjectReference Include="..\PromotionalEngine.DataAccess\PromotionalEngine.DataAccess.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Interface\" />
+    <Folder Include="Implementation\" />
+  </ItemGroup>
+
 </Project>

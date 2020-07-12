@@ -21,4 +21,9 @@
     <ProjectReference Include="..\PromotionalEngine.DataAccess\PromotionalEngine.DataAccess.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Business\" />
+    <Folder Include="App\" />
+  </ItemGroup>
+
 </Project>
