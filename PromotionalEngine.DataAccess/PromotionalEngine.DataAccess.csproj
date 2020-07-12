@@ -8,8 +8,4 @@
     <ProjectReference Include="..\PromotionalEngine.Common\PromotionalEngine.Common.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Interface\" />
-  </ItemGroup>
-
 </Project>
