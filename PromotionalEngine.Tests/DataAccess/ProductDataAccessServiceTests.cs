@@ -24,5 +24,24 @@ namespace PromotionalEngine.Tests.DataAccess
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Count == 0);
         }
+        [TestMethod]
+        public void GetProducts_ProductsInTheStore_ShouldNotReturnEmptyList()
+        {
+            //Arrange
+            var mockDataStore = new Mock<IStore>();
+            var prodDataAccessService = new ProductDataAccessService(mockDataStore.Object);
+            mockDataStore.SetupGet(x => x.Products).Returns(new List<ProductItem> {
+             new ProductItem{
+              Id="x", UnitPrice=10
+             }
+            });
+
+            //Act
+            var result = prodDataAccessService.GetProducts();
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Count > 0);
+        }
     }
 }
