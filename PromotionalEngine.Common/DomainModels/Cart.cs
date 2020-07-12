@@ -6,6 +6,6 @@ namespace PromotionalEngine.Common.DomainModels
     [ExcludeFromCodeCoverage]
     public class Cart
     {
-        public List<CartItem> CartItems { get; set; }
+        public List<CartItem> CartItems { get; set; } = new List<CartItem>();
     }
 }
