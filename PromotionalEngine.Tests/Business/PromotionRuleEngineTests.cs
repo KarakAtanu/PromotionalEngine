@@ -10,17 +10,23 @@ namespace PromotionalEngine.Tests.Business
     [TestClass]
     public class PromotionRuleEngineTests
     {
+        private readonly Mock<IProductDataAccessService> _mockProductDataAccessService;
+        private readonly Mock<IPromotionRuleDataAccessService> _mockPromotionRuleDataAccessService;
+        private readonly PromotionRuleEngine _promotionRuleEngine;
+        public PromotionRuleEngineTests()
+        {
+            _mockProductDataAccessService = new Mock<IProductDataAccessService>();
+            _mockPromotionRuleDataAccessService = new Mock<IPromotionRuleDataAccessService>();
+            _promotionRuleEngine = new PromotionRuleEngine(_mockProductDataAccessService.Object
+                , _mockPromotionRuleDataAccessService.Object);
+        }
         [TestMethod]
         public void GetCheckoutPrice_EmptyCart_ShouldReturnZero()
         {
-            //Arrange
-            var cart = new Cart();
-            var mockProductDataAccessService = new Mock<IProductDataAccessService>();
-            var mockPromotionRuleDataAccessService = new Mock<IPromotionRuleDataAccessService>();
-            var promotionRuleEngine = new PromotionRuleEngine(mockProductDataAccessService.Object
-                , mockPromotionRuleDataAccessService.Object);
+            //Assert
+            var _cart = new Cart();
             //Act
-            double result = promotionRuleEngine.GetCheckoutPrice(cart);
+            double result = _promotionRuleEngine.GetCheckoutPrice(_cart);
             //Assert
             Assert.AreEqual(0, result);
         }
@@ -30,19 +36,15 @@ namespace PromotionalEngine.Tests.Business
         [DataRow("C", 20)]
         public void GetCheckoutPrice_SingleItemWithSingleUnitInCart_ShoudReturnItemUnitPrice(string id, double unitPrice)
         {
-            //Assert            
-            var mockProductDataAccessService = new Mock<IProductDataAccessService>();
-            var mockPromotionRuleDataAccessService = new Mock<IPromotionRuleDataAccessService>();
-            var promotionRuleEngine = new PromotionRuleEngine(mockProductDataAccessService.Object
-                , mockPromotionRuleDataAccessService.Object);
-            var cart = new Cart()
-            {
+            //Assert
+            var _cart = new Cart()
+            {-
                 CartItems = new List<CartItem> { new CartItem {
               ItemId=id, Units=1
              }
              }
             };
-            mockProductDataAccessService.Setup(x => x.GetProducts()).Returns(
+            _mockProductDataAccessService.Setup(x => x.GetProducts()).Returns(
                 new List<ProductItem> {
                  new ProductItem{
                   Id=id,UnitPrice=unitPrice
@@ -50,7 +52,7 @@ namespace PromotionalEngine.Tests.Business
                 }
                 );
             //Act
-            double result = promotionRuleEngine.GetCheckoutPrice(cart);
+            double result = _promotionRuleEngine.GetCheckoutPrice(_cart);
             //Assert
             Assert.AreEqual(unitPrice, result);
         }
