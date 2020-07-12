@@ -52,7 +52,6 @@ namespace PromotionalEngine.Tests.DataAccess
             //Act
             _prodDataAccessService.GetProducts();
             //Assert
-
         }
     }
 }
