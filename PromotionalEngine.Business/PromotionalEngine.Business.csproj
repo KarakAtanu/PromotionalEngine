@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PromotionalEngine.Common\PromotionalEngine.Common.csproj" />
+    <ProjectReference Include="..\PromotionalEngine.DataAccess\PromotionalEngine.DataAccess.csproj" />
+  </ItemGroup>
+
+</Project>
